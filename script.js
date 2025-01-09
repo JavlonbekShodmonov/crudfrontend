@@ -1,8 +1,9 @@
 // Display all posts
 async function fetchPosts() {
-    const response = await fetch('http://localhost:3000/posts');
+    const response = await fetch(BACKEND_URL);
     const posts = await response.json();
     const postsDiv = document.getElementById('posts');
+
     postsDiv.innerHTML = '';
     posts.forEach(post => {
         postsDiv.innerHTML += `<h3>${post.title}</h3><p>${post.content}</p><hr>`;
@@ -14,7 +15,7 @@ document.getElementById('postForm').addEventListener('submit', async function (e
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
-    const response = await fetch('http://localhost:3000/posts', {
+    const response = await fetch(`${process.env.BACKEND_URL}/posts/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ document.getElementById('updateForm').addEventListener('submit', async function 
     const title = document.getElementById('updateTitle').value;
     const content = document.getElementById('updateContent').value;
 
-    const response = await fetch(`http://localhost:3000/posts/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/posts/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ document.getElementById('deleteForm').addEventListener('submit', async function 
     e.preventDefault();
     const id = document.getElementById('deleteId').value;
 
-    const response = await fetch(`http://localhost:3000/posts/${id}`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/posts/${id}`, {
         method: 'DELETE',
     });
 
